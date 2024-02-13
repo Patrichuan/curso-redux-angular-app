@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = '05-app-redux';
+export class AppComponent implements OnInit{
+  constructor(private authService: AuthService) {
+  }
+  ngOnInit() {
+    this.authService.initAuthListener();
+  }
 }
