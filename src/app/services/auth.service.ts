@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Auth, User, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword, } from '@angular/fire/auth';
-import { map } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { Usuario } from '../models/usuario.model';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, docData, setDoc } from '@angular/fire/firestore';
+import { AppState } from '../shared/redux/reducers/app.reducer';
+import { Store } from '@ngrx/store';
+import { setUser, unSetUser } from '../shared/redux/actions/auth.actions';
 
 
 @Injectable({
@@ -10,14 +13,26 @@ import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 })
 export class AuthService {
 
-  constructor(private auth: Auth, private firestore: Firestore) { }
+userSubscription: Subscription = new Subscription();
+
+  constructor(private auth: Auth, private firestore: Firestore, private store: Store<AppState>) { }
 
   initAuthListener() {
-    authState(this.auth).subscribe( (fuser) => {
-      console.log( fuser );
-      console.log( fuser?.uid );
-      console.log( fuser?.email );
-    })
+    authState(this.auth).subscribe(
+       (fuser) => {
+      if (fuser) {
+        const userRef = doc(this.firestore, `${fuser.uid}/usuario`);
+        this.userSubscription = docData(userRef).subscribe(firestoreUser => {
+          console.log(firestoreUser);
+          const user = Usuario.fromFirebase(firestoreUser);
+          this.store.dispatch(setUser({ user }));
+        });
+      } else {
+        this.userSubscription.unsubscribe();
+        this.store.dispatch(unSetUser());
+      }
+
+    });
   }
 
   crearUsuario(nombre: string, email: string, password: string) {
