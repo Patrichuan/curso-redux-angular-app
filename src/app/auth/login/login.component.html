@@ -23,6 +23,23 @@
             <div class="form-group">
               <label class="label">Contraseña</label>
               <div class="input-group">
+                <input type="password" id="password" class="form-control" formControlName="password" placeholder="*********">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i *ngIf="isShowPassword"
+                        class="fa fa-eye blackColor"
+                        (click)="togglePasswordVisibility()"></i>
+                    <i *ngIf="!isShowPassword"
+                        class="fa fa-eye-slash blackColor"
+                        (click)="togglePasswordVisibility()"></i>
+                  </span>
+                  <span class="input-group-text">
+                    <i [ngClass]="checkValidFieldRegister('password') ? 'fa fa-check-circle greenColor' : 'fa fa-check-circle greycolor'"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+                <!-- <div class="form-group">
                 <input type="password" class="form-control" formControlName="password" placeholder="*********">
                 <div class="input-group-append">
                   <span class="input-group-text">
@@ -30,7 +47,7 @@
                   </span>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="form-group">
               <button type="submit" [disabled]="this.loginForm.invalid"

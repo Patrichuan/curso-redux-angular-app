@@ -20,7 +20,8 @@ import * as actions from '../../shared/redux/actions/ui.actions';
 export class RegisterComponent implements OnInit, OnDestroy {
   registroForm: FormGroup = new FormGroup({});
   cargando: boolean = false;
-  iuSubscription: Subscription = new Subscription();;
+  iuSubscription: Subscription = new Subscription();
+  isShowPassword: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router,
     private store: Store<AppState>) { }
@@ -61,6 +62,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   checkValidFieldRegister(field: string): boolean{
     return checkValidField(this.registroForm, field);
+  }
+
+  togglePasswordVisibility() {
+    const password = document.getElementById('password');
+    if (password) {
+      if (password.getAttribute('type') === 'password') {
+        password.setAttribute('type', 'text');
+        this.isShowPassword = true;
+      } else {
+        password.setAttribute('type', 'password');
+        this.isShowPassword = false;
+      }
+    }
   }
 }
 

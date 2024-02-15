@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup = new FormGroup({});
   cargando: boolean = false;
   iuSubscription: Subscription = new Subscription();
+  isShowPassword: boolean = false;
   constructor(private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
@@ -65,5 +66,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   checkValidFieldRegister(field: string): boolean{
     return checkValidField(this.loginForm, field);
+  }
+
+  togglePasswordVisibility() {
+    const password = document.getElementById('password');
+    if (password) {
+      if (password.getAttribute('type') === 'password') {
+        password.setAttribute('type', 'text');
+        this.isShowPassword = true;
+      } else {
+        password.setAttribute('type', 'password');
+        this.isShowPassword = false;
+      }
+    }
   }
 }

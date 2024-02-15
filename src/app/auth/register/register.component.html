@@ -39,6 +39,14 @@
                 <input type="password" class="form-control" formControlName="password" placeholder="Password">
                 <div class="input-group-append">
                   <span class="input-group-text">
+                    <i *ngIf="isShowPassword"
+                        class="fa fa-eye blackColor"
+                        (click)="togglePasswordVisibility()"></i>
+                    <i *ngIf="!isShowPassword"
+                        class="fa fa-eye-slash blackColor"
+                        (click)="togglePasswordVisibility()"></i>
+                  </span>
+                  <span class="input-group-text">
                     <i [ngClass]="checkValidFieldRegister('password') ? 'fa fa-check-circle greenColor' : 'fa fa-check-circle greycolor'"></i>
                   </span>
                 </div>
