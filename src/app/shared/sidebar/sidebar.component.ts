@@ -13,7 +13,7 @@ import { Subscription, filter } from 'rxjs';
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
-export class SidebarComponent implements OnInit, OnDestroy{
+export class SidebarComponent implements OnInit, OnDestroy {
   nombreUsuario: string = '';
   userSubscription: Subscription = new Subscription();
   constructor(private authService: AuthService, private router: Router, private store: Store<AppState>) { }
@@ -33,7 +33,6 @@ export class SidebarComponent implements OnInit, OnDestroy{
   }
 
   onLogOut() {
-    console.log('logOut');
     return this.authService.logOut().then(() => {
       this.router.navigate(['/login']);
     });

@@ -9,6 +9,7 @@ import { IngresoEgresoService } from '../../services/ingreso-egreso.service';
 import Swal from 'sweetalert2';
 import { OrdenIngresoPipe } from '../../shared/pipes/orden-ingreso.pipe';
 
+
 @Component({
   selector: 'app-detalle',
   standalone: true,
